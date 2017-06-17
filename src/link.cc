@@ -9,7 +9,11 @@ int gcom::link::get(std::shared_ptr<packet> &pkt)
 	{
 		std::unique_lock<std::mutex> lock(m_mutex);
 		while (empty())
+		{
 			m_cond_put.wait(lock);
+			if (get_abort())
+				return GCOM_NOT_STARTED;
+		}
 		int result = get_impl(pkt);
 		if (result == GCOM_OK)
 			m_cond_get.notify_one();
@@ -32,6 +36,8 @@ int gcom::link::get(std::shared_ptr<packet> &pkt, double timeout_sec)
 		{
 			if (m_cond_put.wait_for(lock, std::chrono::duration<double>(timeout_sec)) == std::cv_status::timeout)
 				return GCOM_TIMEDOUT;
+			if (get_abort())
+				return GCOM_NOT_STARTED;
 		}
 		int result = get_impl(pkt);
 		if (result == GCOM_OK)
@@ -49,7 +55,11 @@ int gcom::link::put(std::shared_ptr<packet> &pkt)
 	{
 		std::unique_lock<std::mutex> lock(m_mutex);
 		while (full())
+		{
 			m_cond_get.wait(lock);
+			if (get_abort())
+				return GCOM_NOT_STARTED;
+		}
 		int result = put_impl(pkt);
 		if (result == GCOM_OK)
 			m_cond_put.notify_one();
@@ -72,6 +82,8 @@ int gcom::link::put(std::shared_ptr<packet> &pkt, double timeout_sec)
 		{
 			if (m_cond_get.wait_for(lock, std::chrono::duration<double>(timeout_sec)) == std::cv_status::timeout)
 				return GCOM_TIMEDOUT;
+			if (get_abort())
+				return GCOM_NOT_STARTED;
 		}
 		int result = put_impl(pkt);
 		if (result == GCOM_OK)

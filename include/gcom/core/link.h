@@ -4,6 +4,7 @@
 #include <gcom/core/base.h>
 #include <gcom/core/globals.h>
 #include <gcom/core/packet.h>
+#include <gcom/utils/shared.h>
 #include <chrono>
 #include <mutex>
 #include <condition_variable>
@@ -20,8 +21,24 @@ namespace gcom
 		}
 
 	public:
-		virtual int inter_start() override final { return GCOM_OK; }
-		virtual void inter_stop() override final {}
+		virtual int inter_start() override final
+		{
+			set_abort(false);
+			return GCOM_OK;
+		}
+		virtual void inter_stop() override final
+		{
+			set_abort(true);
+			m_cond_get.notify_all();
+			m_cond_put.notify_all();
+		}
+
+	private:
+		shared<bool> m_abort;
+	protected:
+		bool get_abort() { return m_abort.get(); }
+	protected:
+		void set_abort(bool a) { m_abort.set(a); }
 
 	private:
 		std::mutex m_mutex;
