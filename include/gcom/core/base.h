@@ -67,11 +67,11 @@ namespace gcom
 					return result;
 				}
 			}
-			if ((result = inter_start()) != GCOM_OK)
-				return result;
 			if ((result = on_start()) != GCOM_OK)
+				return result;
+			if ((result = inter_start()) != GCOM_OK)
 			{
-				inter_stop();
+				on_stop();
 				return result;
 			}
 			set_state(GCOM_STARTED);
@@ -83,8 +83,8 @@ namespace gcom
 				return;
 
 			set_state(GCOM_STOPPED);
-			on_stop();
 			inter_stop();
+			on_stop();
 			for (size_t i = 0; i < get_children_count(); i++)
 				get_child(i)->stop();
 		}
