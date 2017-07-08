@@ -6,7 +6,7 @@ gcom::packet::packet()
 	set_type(GCOM_PACKET);
 }
 
-std::shared_ptr<packet> gcom::packet::soft_copy()
+std::shared_ptr<gcom::packet> gcom::packet::soft_copy()
 {
 	return std::shared_ptr<gcom::packet>(this);
 }
