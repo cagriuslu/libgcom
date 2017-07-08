@@ -16,6 +16,10 @@ void gcom::computer::inter_stop()
 	m_thread = nullptr;
 }
 
+int gcom::computer::on_start() { return GCOM_OK; }
+
+void gcom::computer::on_stop() {}
+
 gcom::input* gcom::computer::get_input(size_t no)
 {
 	return no < m_inputs.size() ? m_inputs[no] : nullptr;

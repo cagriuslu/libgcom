@@ -4,7 +4,6 @@
 #include <gcom/core/node.h>
 #include <gcom/utils/shared.h>
 #include <gcom/core/port.h>
-#include <memory>
 #include <vector>
 #include <thread>
 
@@ -12,14 +11,23 @@ namespace gcom
 {
 	class computer : public node
 	{
+		// Starting/Stopping
 	protected:
 		virtual int inter_start() override final;
 		virtual void inter_stop() override final;
 		virtual int on_loop() = 0;
 	private:
-		virtual int on_start() override { return GCOM_OK; }
-		virtual void on_stop() override {}
+		virtual int on_start() override;
+		virtual void on_stop() override;
 
+		// Thread management
+	private:
+		std::thread *m_thread;
+		int m_thread_result;
+		shared<bool> m_abort_thread;
+		static void thread_func(computer *computer);
+
+		// Members and their getters/setters
 	private:
 		std::vector<input*> m_inputs;
 		std::vector<output*> m_outputs;
@@ -29,12 +37,6 @@ namespace gcom
 	protected:
 		void add_input(std::string = "unnamed input");
 		void add_output(std::string = "unnamed output");
-
-	private:
-		std::thread *m_thread;
-		int m_thread_result;
-		shared<bool> m_abort_thread;
-		static void thread_func(computer *computer);
 	};
 }
 

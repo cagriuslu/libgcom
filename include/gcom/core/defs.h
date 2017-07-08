@@ -1,6 +1,6 @@
 /// \mainpage libgcom
 ///
-/// libgcom is a graph computer library.
+/// libgcom is a parallel computing library.
 ///
 /// \section Introduction
 ///
@@ -45,13 +45,4 @@
 #define GCOM_OUTPUT (5)
 #define GCOM_NODE (6)
 
-
-/*
-#define GCOM_STATEFUL (0)
-#define GCOM_PACKET (1)
-#define GCOM_PORT (2)
-#define GCOM_INPUT (3)
-#define GCOM_OUTPUT (4)
-#define GCOM_CONTAINER (5)
-*/
 #endif
