@@ -11,6 +11,9 @@ namespace gcom
 {
 	class computer : public node
 	{
+	public:
+		computer();
+
 		// Starting/Stopping
 	protected:
 		virtual int inter_start() override final;

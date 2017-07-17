@@ -1,5 +1,10 @@
 #include <gcom/links/ring_buffer_link.h>
 
+gcom::ring_buffer_link::ring_buffer_link()
+{
+	set_type(GCOMCL_RINGBUFFERLNK);
+}
+
 int gcom::ring_buffer_link::on_start()
 {
 	m_buffer = new gcom::ring_buffer< std::shared_ptr<gcom::packet> >(256);

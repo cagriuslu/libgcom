@@ -1,5 +1,10 @@
 #include <gcom/core/computer.h>
 
+gcom::computer::computer()
+{
+	set_type(GCOMCL_COMPUTER);
+}
+
 int gcom::computer::inter_start()
 {
 	m_thread_result = GCOM_OK;

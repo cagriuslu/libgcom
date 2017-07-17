@@ -11,6 +11,9 @@ namespace gcom
 		T m_obj;
 
 	public:
+		object_packet();
+
+	public:
 		void set(T& new_value);
 		T& get();
 

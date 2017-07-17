@@ -1,6 +1,11 @@
 #ifndef GCOM_OBJECT_PACKET_TEMPLATE_H
 #define GCOM_OBJECT_PACKET_TEMPLATE_H
 
+template <class T> gcom::object_packet<T>::object_packet()
+{
+	set_type(GCOMCL_OBJECTPKT);
+}
+
 template <class T> void gcom::object_packet<T>::set(T& new_value)
 {
 	m_obj = new_value;

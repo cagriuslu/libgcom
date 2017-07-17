@@ -10,6 +10,9 @@ namespace gcom
 {
 	class graph : public node
 	{
+	public:
+		graph();
+
 	protected:
 		virtual int inter_start() override final;
 		virtual void inter_stop() override final;

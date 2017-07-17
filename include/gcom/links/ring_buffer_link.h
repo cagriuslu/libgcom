@@ -8,6 +8,9 @@ namespace gcom
 {
 	class ring_buffer_link : public link
 	{
+	public:
+		ring_buffer_link();
+
 	protected:
 		virtual int on_start() override final;
 		virtual void on_stop() override final;

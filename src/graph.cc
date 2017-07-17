@@ -1,5 +1,10 @@
 #include <gcom/core/graph.h>
 
+gcom::graph::graph()
+{
+	set_type(GCOMCL_GRAPH);
+}
+
 int gcom::graph::inter_start()
 {
 	return GCOM_OK;
