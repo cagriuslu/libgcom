@@ -1,5 +1,19 @@
 #include <gcom/core/graph.h>
 
+int gcom::graph::inter_start()
+{
+	return GCOM_OK;
+}
+
+void gcom::graph::inter_stop() { }
+
+int gcom::graph::on_start()
+{
+	return GCOM_OK;
+}
+
+void gcom::graph::on_stop() { }
+
 gcom::input* gcom::graph::get_input(size_t no)
 {
 	return no < m_input_matchings.size() ? m_input_matchings[no] : nullptr;
@@ -18,7 +32,7 @@ int gcom::graph::add_input(input *p)
 		return GCOM_OK;
 	}
 	else
-		return GCOM_ERR;
+		return GCOMERR_UNKNOWN;
 }
 
 int gcom::graph::add_output(output *p)
@@ -29,5 +43,5 @@ int gcom::graph::add_output(output *p)
 		return GCOM_OK;
 	}
 	else
-		return GCOM_ERR;
+		return GCOMERR_UNKNOWN;
 }

@@ -1,6 +1,7 @@
 #ifndef GCOM_PORT_H
 #define GCOM_PORT_H
 
+#include <gcom/core/globals.h>
 #include <gcom/core/base.h>
 #include <gcom/core/link.h>
 #include <gcom/core/packet.h>
@@ -11,122 +12,52 @@ namespace gcom
 	class port : public base
 	{
 	protected:
-		port()
-		{
-			set_id(g_port_id++);
-			set_type(GCOM_PORT);
-		}
+		port();
 
 	public:
-		link* get_link()
-		{
-			return static_cast<link*>(get_child(0));
-		}
+		link* get_link();
 	public:
-		void set_link(std::shared_ptr<link> link)
-		{
-			remove_children();
-			add_child(link);
-		}
+		void set_link(std::shared_ptr<link> link);
 
 	protected:
-		virtual int inter_start() override final { return GCOM_OK; }
-		virtual void inter_stop() override final {}
+		virtual int inter_start() override final;
+		virtual void inter_stop() override final;
 	};
 
 	class input : public port
 	{
 	protected:
-		input()
-		{
-			set_type(GCOM_INPUT);
-		}
+		input();
 
 	private:
-		virtual int on_start() override final { return GCOM_OK; }
-		virtual void on_stop() override final {}
+		virtual int on_start() override final;
+		virtual void on_stop() override final;
 
 	public:
-		int recv(std::shared_ptr<packet> &packet)
-		{
-			if (get_state() != GCOM_STARTED)
-				return GCOM_NOT_STARTED;
+		int recv(std::shared_ptr<packet> &packet);
+		int recv(std::shared_ptr<packet> &packet, double timeout_sec);
 
-			auto link = get_link();
-			if (link)
-				return link->get(packet);
-			else
-				return GCOM_ERR;
-		}
-		int recv(std::shared_ptr<packet> &packet, double timeout_sec)
-		{
-			if (timeout_sec < 0.0)
-				return GCOM_ERR;
-			if (get_state() != GCOM_STARTED)
-				return GCOM_NOT_STARTED;
-
-			auto link = get_link();
-			if (link)
-				return link->get(packet, timeout_sec);
-			else
-				return GCOM_ERR;
-		}
-
-		friend std::shared_ptr<input> new_input(std::string name = "unnamed input")
-		{
-			auto p = new input;
-			p->set_name(name);
-			return std::shared_ptr<input>(p);
-		}
+		friend std::shared_ptr<input> new_input(std::string name = "unnamed input");
 	};
+
+	std::shared_ptr<input> new_input(std::string name);
 
 	class output : public port
 	{
 	protected:
-		output()
-		{
-			set_type(GCOM_OUTPUT);
-		}
+		output();
 
 	private:
-		virtual int on_start() override final { return GCOM_OK; }
-		virtual void on_stop() override final {}
+		virtual int on_start() override final;
+		virtual void on_stop() override final;
 
 	public:
-		int send(std::shared_ptr<packet> &packet)
-		{
-			if (get_state() != GCOM_STARTED)
-				return GCOM_NOT_STARTED;
+		int send(std::shared_ptr<packet> &packet);
+		int send(std::shared_ptr<packet> &packet, double timeout_sec);
 
-			auto link = get_link();
-			if (link)
-				return link->put(packet);
-			else
-				return GCOM_ERR;
-		}
-		int send(std::shared_ptr<packet> &packet, double timeout_sec)
-		{
-			if (timeout_sec < 0.0)
-				return GCOM_ERR;
-			if (get_state() != GCOM_STARTED)
-				return GCOM_NOT_STARTED;
-
-			auto link = get_link();
-			if (link)
-				return link->put(packet, timeout_sec);
-			else
-				return GCOM_ERR;
-		}
-
-		friend std::shared_ptr<output> new_output(std::string name = "unnamed output")
-		{
-			auto p = new output;
-			p->set_name(name);
-			return std::shared_ptr<output>(p);
-		}
+		friend std::shared_ptr<output> new_output(std::string name = "unnamed output");
 	};
 
-	std::shared_ptr<input> new_input(std::string name);
 	std::shared_ptr<output> new_output(std::string name);
 }
 

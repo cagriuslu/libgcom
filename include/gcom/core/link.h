@@ -14,31 +14,18 @@ namespace gcom
 	class link : public base
 	{
 	protected:
-		link()
-		{
-			set_id(g_link_id++);
-			set_type(GCOM_LINK);
-		}
+		link();
 
 	public:
-		virtual int inter_start() override final
-		{
-			set_abort(false);
-			return GCOM_OK;
-		}
-		virtual void inter_stop() override final
-		{
-			set_abort(true);
-			m_cond_get.notify_all();
-			m_cond_put.notify_all();
-		}
+		virtual int inter_start() override final;
+		virtual void inter_stop() override final;
 
 	private:
 		shared<bool> m_abort;
 	protected:
-		bool get_abort() { return m_abort.get(); }
+		bool get_abort();
 	protected:
-		void set_abort(bool a) { m_abort.set(a); }
+		void set_abort(bool a);
 
 	private:
 		std::mutex m_mutex;
@@ -55,15 +42,12 @@ namespace gcom
 		virtual int get_impl(std::shared_ptr<packet> &pkt) = 0;
 		virtual int put_impl(std::shared_ptr<packet> &pkt) = 0;
 
-		template <class T> friend std::shared_ptr<link> new_link(std::string name = "unnamed link")
-		{
-			auto l = new T;
-			l->set_name(name);
-			return std::shared_ptr<link>(l);
-		}
+		template <class T> friend std::shared_ptr<link> new_link(std::string name = "unnamed link");
 	};
 
 	template <class T> std::shared_ptr<link> new_link(std::string name);
 }
+
+#include <gcom/templates/link_template.h>
 
 #endif

@@ -11,11 +11,11 @@ namespace gcom
 	class graph : public node
 	{
 	protected:
-		virtual int inter_start() override final { return GCOM_OK; }
-		virtual void inter_stop() override final {}
+		virtual int inter_start() override final;
+		virtual void inter_stop() override final;
 	private:
-		virtual int on_start() override { return GCOM_OK; }
-		virtual void on_stop() override {}
+		virtual int on_start() override;
+		virtual void on_stop() override;
 
 	private:
 		std::vector<input*> m_input_matchings;

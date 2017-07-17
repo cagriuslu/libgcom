@@ -4,14 +4,14 @@
 gcom::base::base()
 {
 	set_id(gcom::g_base_id++);
-	set_type(GCOM_BASE);
-	set_state(GCOM_STOPPED);
+	set_type(GCOMCL_BASE);
+	set_state(GCOMST_STOPPED);
 	set_parent(nullptr);
 }
 
 int gcom::base::start()
 {
-	if (get_state() == GCOM_STARTED)
+	if (get_state() == GCOMST_STARTED)
 		return GCOM_OK;
 
 	int result;
@@ -31,16 +31,16 @@ int gcom::base::start()
 		on_stop();
 		return result;
 	}
-	set_state(GCOM_STARTED);
+	set_state(GCOMST_STARTED);
 	return GCOM_OK;
 }
 
 void gcom::base::stop()
 {
-	if (get_state() == GCOM_STOPPED)
+	if (get_state() == GCOMST_STOPPED)
 		return;
 
-	set_state(GCOM_STOPPED);
+	set_state(GCOMST_STOPPED);
 	inter_stop();
 	on_stop();
 	for (size_t i = 0; i < get_children_count(); i++)

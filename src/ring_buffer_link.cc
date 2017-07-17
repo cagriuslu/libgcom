@@ -15,17 +15,17 @@ void gcom::ring_buffer_link::on_stop()
 int gcom::ring_buffer_link::get_impl(std::shared_ptr<packet> &pkt)
 {
 	if (m_buffer)
-		return m_buffer->try_get(pkt) ? GCOM_OK : GCOM_ERR;
+		return m_buffer->try_get(pkt) ? GCOM_OK : GCOMERR_UNKNOWN;
 	else
-		return GCOM_ERR;
+		return GCOMERR_UNKNOWN;
 }
 
 int gcom::ring_buffer_link::put_impl(std::shared_ptr<packet> &pkt)
 {
 	if (m_buffer)
-		return m_buffer->try_put(pkt) ? GCOM_OK : GCOM_ERR;
+		return m_buffer->try_put(pkt) ? GCOM_OK : GCOMERR_UNKNOWN;
 	else
-		return GCOM_ERR;
+		return GCOMERR_UNKNOWN;
 }
 
 bool gcom::ring_buffer_link::empty()

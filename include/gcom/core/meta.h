@@ -11,16 +11,16 @@ namespace gcom
 	private:
 		size_t m_id;
 	public:
-		size_t get_id() { return m_id; }
+		size_t get_id();
 	protected:
-		void set_id(size_t id) { m_id = id; }
+		void set_id(size_t id);
 
 	private:
 		int m_type;
 	public:
-		int get_type() { return m_type; }
+		int get_type();
 	protected:
-		void set_type(int type) { m_type = type; }
+		void set_type(int type);
 	};
 }
 

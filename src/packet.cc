@@ -3,7 +3,7 @@
 gcom::packet::packet()
 {
 	set_id(gcom::g_packet_id++);
-	set_type(GCOM_PACKET);
+	set_type(GCOMCL_PACKET);
 }
 
 std::shared_ptr<gcom::packet> gcom::packet::soft_copy()

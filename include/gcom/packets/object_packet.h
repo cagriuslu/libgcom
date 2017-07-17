@@ -11,16 +11,13 @@ namespace gcom
 		T m_obj;
 
 	public:
-		void set(T& new_value) { m_obj = new_value; }
-		T& get() { return m_obj; }
+		void set(T& new_value);
+		T& get();
 
-		virtual std::shared_ptr<packet> hard_copy() override final
-		{
-			auto p = new object_packet<T>();
-			p->set(get());
-			return std::shared_ptr<packet>(p);
-		}
+		virtual std::shared_ptr<packet> hard_copy() override final;
 	};
 }
+
+#include <gcom/templates/object_packet_template.h>
 
 #endif

@@ -13,26 +13,12 @@ namespace gcom
 		std::mutex _mutex;
 		std::condition_variable _cond;
 	public:
-		void set(T t)
-		{
-			std::unique_lock<std::mutex> lock(_mutex);
-			_t = t;
-			_cond.notify_all();
-		}
-
-		T get()
-		{
-			std::unique_lock<std::mutex> lock(_mutex);
-			return _t;
-		}
-
-		void wait(T t)
-		{
-			std::unique_lock<std::mutex> lock(_mutex);
-			while (_t != t)
-				_cond.wait(lock);
-		}
+		void set(T t);
+		T get();
+		void wait(T t);
 	};
 }
+
+#include <gcom/templates/shared_template.h>
 
 #endif
