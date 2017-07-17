@@ -1,6 +1,6 @@
-/// \mainpage libgcom
+/// \mainpage gcom
 ///
-/// libgcom is a parallel computing library.
+/// gcom is a parallel computing library.
 ///
 /// \section Introduction
 ///
