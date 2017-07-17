@@ -19,10 +19,9 @@ namespace gcom
 		template <class T> friend std::shared_ptr<packet> new_packet();
 	};
 
-	template <class T> std::shared_ptr<packet> new_packet()
-	{
-		return std::shared_ptr<packet>(new T);
-	}
+	template <class T> std::shared_ptr<packet> new_packet();
 }
+
+#include <gcom/templates/packet_template.h>
 
 #endif
