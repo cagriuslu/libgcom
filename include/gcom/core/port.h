@@ -36,6 +36,8 @@ namespace gcom
 	public:
 		int recv(std::shared_ptr<packet> &packet);
 		int recv(std::shared_ptr<packet> &packet, double timeout_sec);
+	protected:
+		virtual int on_recv(std::shared_ptr<packet> &packet);
 
 		friend std::shared_ptr<input> new_input(std::string name = "unnamed input");
 	};
@@ -54,6 +56,8 @@ namespace gcom
 	public:
 		int send(std::shared_ptr<packet> &packet);
 		int send(std::shared_ptr<packet> &packet, double timeout_sec);
+	protected:
+		virtual int on_send(std::shared_ptr<packet> &packet);
 
 		friend std::shared_ptr<output> new_output(std::string name = "unnamed output");
 	};

@@ -37,9 +37,17 @@ int gcom::input::recv(std::shared_ptr<gcom::packet> &packet)
 
 	auto link = get_link();
 	if (link)
-		return link->get(packet);
+	{
+		int result = link->get(packet);
+		if (result == GCOM_OK)
+			return on_recv(packet);
+		else
+			return result;
+	}
 	else
+	{
 		return GCOMERR_NOTCONN;
+	}
 }
 
 int gcom::input::recv(std::shared_ptr<gcom::packet> &packet, double timeout_sec)
@@ -51,9 +59,23 @@ int gcom::input::recv(std::shared_ptr<gcom::packet> &packet, double timeout_sec)
 
 	auto link = get_link();
 	if (link)
-		return link->get(packet, timeout_sec);
+	{
+		int result = link->get(packet, timeout_sec);
+		if (result == GCOM_OK)
+			return on_recv(packet);
+		else
+			return result;
+	}
 	else
+	{
 		return GCOMERR_NOTCONN;
+	}
+}
+
+int gcom::input::on_recv(std::shared_ptr<gcom::packet> &packet)
+{
+	(void) packet;
+	return GCOM_OK;
 }
 
 gcom::output::output()
@@ -70,6 +92,10 @@ int gcom::output::send(std::shared_ptr<gcom::packet> &packet)
 	if (get_state() != GCOMST_STARTED)
 		return GCOMERR_STOPPED;
 
+	int result = on_send(packet);
+	if (result != GCOM_OK)
+		return result;
+
 	auto link = get_link();
 	if (link)
 		return link->put(packet);
@@ -84,11 +110,21 @@ int gcom::output::send(std::shared_ptr<gcom::packet> &packet, double timeout_sec
 	if (get_state() != GCOMST_STARTED)
 		return GCOMERR_STOPPED;
 
+	int result = on_send(packet);
+	if (result != GCOM_OK)
+		return result;
+
 	auto link = get_link();
 	if (link)
 		return link->put(packet, timeout_sec);
 	else
 		return GCOMERR_NOTCONN;
+}
+
+int gcom::output::on_send(std::shared_ptr<gcom::packet> &packet)
+{
+	(void) packet;
+	return GCOM_OK;
 }
 
 std::shared_ptr<gcom::input> gcom::new_input(std::string name)
