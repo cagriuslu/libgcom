@@ -3,7 +3,7 @@
 
 #include <gcom/core/defs.h>
 #include <gcom/core/meta.h>
-#include <gcom/utils/shared.h>
+#include <gcom/utils/shared_var.h>
 #include <cstdio>
 #include <memory>
 #include <string>
@@ -67,7 +67,7 @@ namespace gcom
 	private:
 		/// \brief Holds the current state of the object.
 		/// \details See defs.h for available states.
-		shared<int> m_state;
+		shared_var<int> m_state;
 
 	public:
 		/// \brief Returns the current state of the object.

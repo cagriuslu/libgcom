@@ -41,6 +41,13 @@
 #define GCOMERR_ARGNULL (-5)
 #define GCOMERR_NOTCONN (-6)
 #define GCOMERR_ARGNEG (-7)
+#define GCOMERR_NOTCONF (-8)
+#define GCOMERR_KEYEXISTS (-9)
+#define GCOMERR_ARGEMPTY (-10)
+#define GCOMERR_RULEEXISTS (-11)
+#define GCOMERR_ARGINVAL (-12)
+#define GCOMERR_NORULE (-13)
+#define GCOMERR_MULINPUT (-14)
 
 ///// class types /////
 // gcom core classes occupy 0x00000000-0x0FFFFFFF

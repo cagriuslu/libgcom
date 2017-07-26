@@ -2,7 +2,7 @@
 #define GCOM_COMPUTER_H
 
 #include <gcom/core/node.h>
-#include <gcom/utils/shared.h>
+#include <gcom/utils/shared_var.h>
 #include <gcom/core/port.h>
 #include <vector>
 #include <thread>
@@ -27,7 +27,7 @@ namespace gcom
 	private:
 		std::thread *m_thread;
 		int m_thread_result;
-		shared<bool> m_abort_thread;
+		shared_var<bool> m_abort_thread;
 		static void thread_func(computer *computer);
 
 		// Members and their getters/setters

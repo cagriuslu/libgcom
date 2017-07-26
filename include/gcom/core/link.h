@@ -4,7 +4,7 @@
 #include <gcom/core/base.h>
 #include <gcom/core/globals.h>
 #include <gcom/core/packet.h>
-#include <gcom/utils/shared.h>
+#include <gcom/utils/shared_var.h>
 #include <chrono>
 #include <mutex>
 #include <condition_variable>
@@ -21,7 +21,7 @@ namespace gcom
 		virtual void inter_stop() override final;
 
 	private:
-		shared<bool> m_abort;
+		shared_var<bool> m_abort;
 	protected:
 		bool get_abort();
 	protected:

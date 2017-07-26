@@ -1,12 +1,12 @@
-#ifndef GCOM_SHARED_H
-#define GCOM_SHARED_H
+#ifndef GCOM_SHARED_VAR_H
+#define GCOM_SHARED_VAR_H
 
 #include <mutex>
 #include <condition_variable>
 
 namespace gcom
 {
-	template <class T> class shared
+	template <class T> class shared_var
 	{
 	private:
 		T _t;
@@ -19,6 +19,6 @@ namespace gcom
 	};
 }
 
-#include <gcom/templates/shared_template.h>
+#include <gcom/templates/shared_var_template.h>
 
 #endif
