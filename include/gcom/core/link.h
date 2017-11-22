@@ -11,6 +11,10 @@
 
 namespace gcom
 {
+	class link;
+
+	template <class T> std::shared_ptr<link> new_link(std::string name = "unnamed link");
+
 	class link : public base
 	{
 	protected:
@@ -42,10 +46,8 @@ namespace gcom
 		virtual int get_impl(std::shared_ptr<packet> &pkt) = 0;
 		virtual int put_impl(std::shared_ptr<packet> &pkt) = 0;
 
-		template <class T> friend std::shared_ptr<link> new_link(std::string name = "unnamed link");
+		template <class T> friend std::shared_ptr<link> new_link(std::string name);
 	};
-
-	template <class T> std::shared_ptr<link> new_link(std::string name);
 }
 
 #include <gcom/templates/link_template.h>

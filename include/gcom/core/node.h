@@ -7,6 +7,10 @@
 
 namespace gcom
 {
+	class node;
+
+	template <class T> std::shared_ptr<node> new_node(std::string name = "unnamed node");
+
 	class node : public base
 	{
 	protected:
@@ -16,10 +20,8 @@ namespace gcom
 		virtual input* get_input(size_t) = 0;
 		virtual output* get_output(size_t) = 0;
 
-		template <class T> friend std::shared_ptr<node> new_node(std::string name = "unnamed node");
+		template <class T> friend std::shared_ptr<node> new_node(std::string name);
 	};
-
-	template <class T> std::shared_ptr<node> new_node(std::string name);
 
 	template <class T> int new_connection(output *out, input *in);
 }

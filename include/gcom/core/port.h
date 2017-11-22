@@ -24,6 +24,10 @@ namespace gcom
 		virtual void inter_stop() override final;
 	};
 
+	class input;
+
+	std::shared_ptr<input> new_input(std::string name = "unnamed input");
+
 	class input : public port
 	{
 	protected:
@@ -39,10 +43,12 @@ namespace gcom
 	protected:
 		virtual int on_recv(std::shared_ptr<packet> &packet);
 
-		friend std::shared_ptr<input> new_input(std::string name = "unnamed input");
+		friend std::shared_ptr<input> new_input(std::string name);
 	};
 
-	std::shared_ptr<input> new_input(std::string name);
+	class output;
+
+	std::shared_ptr<output> new_output(std::string name = "unnamed output");
 
 	class output : public port
 	{
@@ -59,10 +65,8 @@ namespace gcom
 	protected:
 		virtual int on_send(std::shared_ptr<packet> &packet);
 
-		friend std::shared_ptr<output> new_output(std::string name = "unnamed output");
+		friend std::shared_ptr<output> new_output(std::string name);
 	};
-
-	std::shared_ptr<output> new_output(std::string name);
 }
 
 #endif
