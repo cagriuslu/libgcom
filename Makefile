@@ -1,56 +1,25 @@
-# Library name
-l=gcom
+# redmake Individual Project Makefile
+# Version 0.1
 
-# Executables
-CC=gcc
-CP=g++
-RM=rm
-MKDIR=mkdir
-AR=ar
-LD=ld
+# Build Options
+LIBRARY_NAME          = gcom
+COMMON_COMPILER_FLAGS = -Wall -Wextra
+C_COMPILER_FLAGS      =
+CPP_COMPILER_FLAGS    = -std=c++11
+INCLUDE_DIRECTORIES   =
+LINKER_FLAGS          =
+REDMAKE_DEPENDENCIES  =
+LINK_TYPE             = dynamic
 
-# Directories
-SRCDIR=src
-OBJDIR=obj
-BINDIR=bin
-LIBDIR=lib
-TESTDIR=test
-INCDIR=include
+##################
+## Call redmake ##
+##################
 
-# Import all the .cc files in SRCDIR
-SRCFILES=$(wildcard $(SRCDIR)/*.cc)
-OBJFILES=$(patsubst $(SRCDIR)/%.cc,$(OBJDIR)/%.o,$(SRCFILES))
+MAKE = make
+REDMAKE_DIRECTORY = ../redmake/Makefile
+COMMAND = $(MAKE) -f $(REDMAKE_DIRECTORY) -C . $@ LIBRARY_NAME="$(LIBRARY_NAME)" COMMON_COMPILER_FLAGS="$(COMMON_COMPILER_FLAGS)" C_COMPILER_FLAGS="$(C_COMPILER_FLAGS)" CPP_COMPILER_FLAGS="$(CPP_COMPILER_FLAGS)" INCLUDE_DIRECTORIES="$(INCLUDE_DIRECTORIES)" LINKER_FLAGS="$(LINKER_FLAGS)" REDMAKE_DEPENDENCIES="$(REDMAKE_DEPENDENCIES)" LINK_TYPE="$(LINK_TYPE)"
 
-# Import all the .cc files in TESTDIR
-TESTSRCS=$(wildcard $(TESTDIR)/*.cc)
-TESTBINS=$(patsubst $(TESTDIR)/%.cc,$(BINDIR)/%,$(TESTSRCS))
-
-# Configurations
-all: $(OBJDIR) $(LIBDIR) $(LIBDIR)/lib$(l).a
-
-test: all $(BINDIR) $(TESTBINS)
-
-clean:
-	@$(RM) -rf $(BINDIR)
-	@$(RM) -rf $(OBJDIR)
-	@$(RM) -rf $(LIBDIR)
-
-# Compile
-$(OBJDIR)/%.o: $(SRCDIR)/%.cc
-	$(CP) -g -Wall -Wextra -std=c++11 -pthread -I$(INCDIR) -c $< -o $@
-
-$(BINDIR)/%: $(TESTDIR)/%.cc
-	$(CP) -g -Wall -Wextra -std=c++11 -pthread -I$(INCDIR) $< -o $@ -L$(LIBDIR) -l$(l)
-
-# Archive
-$(LIBDIR)/lib$(l).a: $(OBJFILES)
-	@$(AR) rcsv $@ $(OBJFILES)
-
-# mkdir
-$(OBJDIR):
-	@$(MKDIR) -p $(OBJDIR)
-$(LIBDIR):
-	@$(MKDIR) -p $(LIBDIR)
-$(BINDIR):
-	@$(MKDIR) -p $(BINDIR)
-
+all:
+	$(COMMAND)
+%:
+	$(COMMAND)
